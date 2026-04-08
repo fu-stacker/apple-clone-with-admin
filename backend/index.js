@@ -87,6 +87,40 @@ app.post("/products", (req, res) => {
   );
 });
 
+app.put("update/:id", (req, res) => {
+  const id = req.params.id;
+  const { name, price, category, description, image_url } = req.body;
+  if (!name || !price) {
+    return res.status(400).json({
+      error: "Name and price are required",
+    });
+  }
+  const sql = `
+    UPDATE products 
+    SET name = ?, price = ?, category = ?, description = ?, image_url = ?
+    WHERE id = ?
+  `;
+
+  db.query(
+    sql,
+    [name, price, category, description, image_url, id],
+    (err, data) => {
+      if (err) {
+        console.error(" Error updating product:", err.message);
+        return res.status(500).json({
+          error: "Failed to update product in database",
+        });
+      }
+      if (result.affectedRows === 0) {
+        return res.status(404).json({
+          error: "Product not found with that id",
+        });
+      }
+      res.json({ message: "products update succesfully" });
+    },
+  );
+});
+
 const PORT = 8888;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
