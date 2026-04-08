@@ -14,7 +14,8 @@ const db = mysql.createConnection({
 
 db.connect((err) => {
   if (err) {
-    return console.log("error is happen while connecting to the database");
+    console.log("error is happen while connecting to the database");
+    throw err;
   }
   console.log("connect succesfully to the database ");
 
@@ -47,10 +48,11 @@ app.get("/products", (req, res) => {
 
   db.query(sql, (err, data) => {
     if (err) {
-      res.end("error is happen while fetching the data");
+      console.log("error is happen while fetching the data");
       return res.status(500).json({ error: "Failed to fetch products" });
     }
     res.json(data);
+    console.table(data);
   });
 });
 // POST - Add a new product
@@ -87,7 +89,7 @@ app.post("/products", (req, res) => {
   );
 });
 
-app.put("update/:id", (req, res) => {
+app.put("/products/:id", (req, res) => {
   const id = req.params.id;
   const { name, price, category, description, image_url } = req.body;
   if (!name || !price) {
@@ -120,7 +122,27 @@ app.put("update/:id", (req, res) => {
     },
   );
 });
+app.delete("/products/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = "DELETE FROM products WHERE id = ?";
+  db.query(sql, [id], (err, result) => {
+    if (err) {
+      console.error("❌ Error deleting product:", err.message);
+      return res.status(500).json({ error: "Failed to delete product" });
+    }
 
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    res.json({ message: "✅ Product deleted successfully" });
+  });
+});
+
+// TEMPORARY test route - remove later
+app.delete("/test", (req, res) => {
+  res.json({ message: "DELETE test works!" });
+});
 const PORT = 8888;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
