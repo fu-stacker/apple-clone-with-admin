@@ -1,6 +1,8 @@
 import AppleIcon from "@mui/icons-material/Apple";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { Link } from "react-router-dom";
+import "./Navbar.css";
 
 function Navbar() {
   return (
@@ -19,7 +21,9 @@ function Navbar() {
       <div className="navbar-right">
         <SearchIcon className="navbar-icon" />
         <AccountCircleIcon className="navbar-icon" />
-        <span className="navbar-link">Admin</span>
+        <Link to="/admin" className="navbar-link">
+          Admin
+        </Link>
       </div>
     </nav>
   );

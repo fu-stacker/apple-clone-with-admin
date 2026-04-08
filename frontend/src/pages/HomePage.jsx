@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ProductList from "../components/ProductList";
 import { api } from "../services/api";
+import "./HomePage.css";
 
 function HomePage() {
   const [products, setProducts] = useState([]);

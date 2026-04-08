@@ -1,0 +1,27 @@
+/* HomePage.css */
+
+.homepage {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.homepage-title {
+  font-size: 2.8rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #1d1d1f;
+  margin-bottom: 20px;
+}
+
+.loading,
+.error {
+  text-align: center;
+  font-size: 1.3rem;
+  margin-top: 80px;
+  color: #86868b;
+}
+
+.error {
+  color: #ff3b30;
+}

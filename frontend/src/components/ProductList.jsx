@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./ProductList.css";
 function ProductList({ products }) {
   // If there are no products, show a message
   if (!products || products.length === 0) {
